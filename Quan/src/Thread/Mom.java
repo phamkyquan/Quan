@@ -6,44 +6,31 @@
 package Thread;
 
 import OpenFile.OpenFile;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author PC1
  */
 public class Mom extends Thread {
-    
-    private boolean ketqua;
 
-    public boolean isKetqua() {
-        return ketqua;
+    private final Queue queue;
+
+    public Mom(Queue queue) {
+        this.queue = queue;
     }
 
-    
     @Override
     public void run() {
         ArrayList<String> a = OpenFile.openFile("D:\\NetBeans\\FILE\\Quan\\mom.dat");
-        int age;
         try {
-            age = OpenFile.calculateAge(a.get(2));
-            if(age==21){
-                ketqua = true;
+            int age = OpenFile.calculateAge(a.get(2));
+            if (age == 21) {
+                queue.put();
             }
         } catch (Exception ex) {
         }
-        
+        queue.putSum();
     }
 
 }

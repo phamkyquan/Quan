@@ -6,33 +6,31 @@
 package Thread;
 
 import OpenFile.OpenFile;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author PC1
  */
-public class UBND extends Thread{
+public class UBND extends Thread {
 
-    private boolean ketqua;
+    private final Queue queue;
 
-    public boolean isKetqua() {
-        return ketqua;
+    public UBND(Queue queue) {
+        this.queue = queue;
     }
-    
+
     @Override
     public void run() {
         ArrayList<String> a = OpenFile.openFile("D:\\NetBeans\\FILE\\Quan\\UBND.dat");
         try {
             int age = OpenFile.calculateAge(a.get(5));
-            if(age==21){
-                ketqua = true;
+            if (age == 21) {
+                queue.put();
             }
         } catch (Exception ex) {
         }
+        queue.putSum();
     }
-    
+
 }

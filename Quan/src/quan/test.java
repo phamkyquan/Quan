@@ -6,8 +6,6 @@
 package quan;
 
 import Thread.*;
-import java.text.ParseException;
-import WriteFile.WriteFile;
 
 /**
  *
@@ -15,23 +13,15 @@ import WriteFile.WriteFile;
  */
 public class test {
 
-    public static void main(String[] args) throws ParseException, InterruptedException {
-        Dad dad = new Dad();
-        Mom mom = new Mom();
-        UBND ubnd = new UBND();
+    public static void main(String[] args) {
+        Queue queue = new Queue();
+        Dad dad = new Dad(queue);
+        Mom mom = new Mom(queue);
+        UBND ubnd = new UBND(queue);
         mom.start();
         dad.start();
         ubnd.start();
-        
-        Thread.sleep(100);
-        while(true){
-            if(mom.isKetqua()&&dad.isKetqua()&&ubnd.isKetqua()){
-                System.out.println("Output result.bin....");
-                WriteFile.writeFileOutput();
-                break;
-            }
-        }
-        
+        queue.start();
     }
 
 }

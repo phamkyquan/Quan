@@ -12,20 +12,24 @@ import java.util.ArrayList;
  *
  * @author PC1
  */
-public class Dad extends Thread{
-    
-    private boolean ketqua;
+public class Dad extends Thread {
 
-    public boolean isKetqua() {
-        return ketqua;
+    private final Queue queue;
+
+    public Dad(Queue queue) {
+        this.queue = queue;
     }
-    
+
     @Override
     public void run() {
-        ArrayList<String>  a = OpenFile.openFile("D:\\NetBeans\\FILE\\Quan\\dad.dat");
-        if(a.get(1).equals("21")){
-            ketqua = true;
+        ArrayList<String> a = OpenFile.openFile("D:\\NetBeans\\FILE\\Quan\\dad.dat");
+        if (a.get(1).equals("21")) {
+            try {
+                queue.put();
+            } catch (Exception ex) {
+            }
         }
+        queue.putSum();
     }
-    
+
 }
