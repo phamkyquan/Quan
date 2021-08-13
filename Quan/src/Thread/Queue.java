@@ -6,28 +6,27 @@
 package Thread;
 
 import WriteFile.WriteFile;
+import java.util.concurrent.CountDownLatch;
 
 /**
  *
  * @author PC1
  */
-public class Queue extends Thread {
+public class Queue {
 
     private int dem = 0;
-
-    public int getDem() {
-        return dem;
-    }
-
-    public void putDem(){
-        dem++;
-    }
     
-    public void submit(){
+    public synchronized void putDem() {
+        dem++;
+        
+    }
+
+    public void end(){ 
         if (dem == 3) {
             System.out.println("Output result.bin....");
             WriteFile.writeFileOutput();
-        } else {
+        }
+        else {
             System.out.println("Sai");
         }
     }

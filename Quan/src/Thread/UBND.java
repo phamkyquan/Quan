@@ -16,11 +16,11 @@ import java.util.concurrent.CyclicBarrier;
  */
 public class UBND extends Thread {
 
-    private final CyclicBarrier cyclicBarrier;
+    private final CountDownLatch latch;
     private final Queue queue;
 
-    public UBND(CyclicBarrier cyclicBarrier, Queue queue) {
-        this.cyclicBarrier = cyclicBarrier;
+    public UBND(CountDownLatch latch, Queue queue) {
+        this.latch = latch;
         this.queue = queue;
     }
 
@@ -35,7 +35,7 @@ public class UBND extends Thread {
         } catch (Exception ex) {
         }
         try {
-            cyclicBarrier.await();
+            latch.countDown();
         } catch (Exception ex) {
         }
     }
