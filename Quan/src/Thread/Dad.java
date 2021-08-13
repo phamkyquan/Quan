@@ -7,6 +7,11 @@ package Thread;
 
 import OpenFile.OpenFile;
 import java.util.ArrayList;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,9 +19,11 @@ import java.util.ArrayList;
  */
 public class Dad extends Thread {
 
+    private final CyclicBarrier cyclicBarrier;
     private final Queue queue;
 
-    public Dad(Queue queue) {
+    public Dad(CyclicBarrier cyclicBarrier, Queue queue) {
+        this.cyclicBarrier = cyclicBarrier;
         this.queue = queue;
     }
 
@@ -25,11 +32,15 @@ public class Dad extends Thread {
         ArrayList<String> a = OpenFile.openFile("D:\\NetBeans\\FILE\\Quan\\dad.dat");
         if (a.get(1).equals("21")) {
             try {
-                queue.put();
+                queue.putDem();
+                
             } catch (Exception ex) {
             }
         }
-        queue.putSum();
+        try {
+            cyclicBarrier.await();
+        } catch (Exception ex) {
+        }
     }
 
 }

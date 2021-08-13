@@ -13,34 +13,22 @@ import WriteFile.WriteFile;
  */
 public class Queue extends Thread {
 
-    private int dem;
-    private int sum;
-    
-    public void putSum(){
-        sum++;
+    private int dem = 0;
+
+    public int getDem() {
+        return dem;
     }
 
-    public synchronized void put() {
+    public void putDem(){
         dem++;
-        notifyAll();
     }
-
-    @Override
-    public void run() {
-        while (dem != 3) {
-            if (sum == 3) {
-                break;
-            }
-            try {
-                wait();
-            } catch (Exception ex) {
-            }
-        }
-        if(dem == 3) {
+    
+    public void submit(){
+        if (dem == 3) {
             System.out.println("Output result.bin....");
             WriteFile.writeFileOutput();
+        } else {
+            System.out.println("Sai");
         }
-        else System.out.println("Sai");
     }
-
 }

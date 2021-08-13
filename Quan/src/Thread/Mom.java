@@ -7,6 +7,8 @@ package Thread;
 
 import OpenFile.OpenFile;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 
 /**
  *
@@ -14,9 +16,11 @@ import java.util.ArrayList;
  */
 public class Mom extends Thread {
 
+    private final CyclicBarrier cyclicBarrier;
     private final Queue queue;
 
-    public Mom(Queue queue) {
+    public Mom(CyclicBarrier cyclicBarrier, Queue queue) {
+        this.cyclicBarrier = cyclicBarrier;
         this.queue = queue;
     }
 
@@ -26,11 +30,14 @@ public class Mom extends Thread {
         try {
             int age = OpenFile.calculateAge(a.get(2));
             if (age == 21) {
-                queue.put();
+                queue.putDem();
             }
         } catch (Exception ex) {
         }
-        queue.putSum();
+        try {
+            cyclicBarrier.await();
+        } catch (Exception ex) {
+        }
     }
 
 }

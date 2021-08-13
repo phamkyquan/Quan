@@ -6,6 +6,8 @@
 package quan;
 
 import Thread.*;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 /**
  *
@@ -13,15 +15,17 @@ import Thread.*;
  */
 public class test {
 
-    public static void main(String[] args) {
-        Queue queue = new Queue();
-        Dad dad = new Dad(queue);
-        Mom mom = new Mom(queue);
-        UBND ubnd = new UBND(queue);
+    public static void main(String[] args) throws InterruptedException, BrokenBarrierException{
+        final CyclicBarrier barrier = new CyclicBarrier(4);
+        final Queue queue = new Queue();
+        Dad dad = new Dad(barrier, queue);
+        Mom mom = new Mom(barrier, queue);
+        UBND ubnd = new UBND(barrier, queue);
         mom.start();
         dad.start();
         ubnd.start();
-        queue.start();
+        barrier.await();
+        queue.submit();
     }
 
 }
